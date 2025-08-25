@@ -15,7 +15,31 @@ interface EditorFooterProps {
 export function EditorFooter({ wordCount, autoSaveStatus, onExportHTML, onExportJSON }: EditorFooterProps) {
   const handleExportHTML = () => {
     const html = onExportHTML()
-    const blob = new Blob([html], { type: "text/html" })
+    const fullHTML = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exported Content</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1, h2, h3, h4, h5, h6 { margin-top: 1.5em; margin-bottom: 0.5em; }
+        p { margin-bottom: 1em; }
+        ul, ol { margin-bottom: 1em; padding-left: 2em; }
+        blockquote { margin: 1em 0; padding-left: 1em; border-left: 3px solid #ccc; color: #666; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f5f5f5; font-weight: bold; }
+        code { background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: monospace; }
+        pre { background-color: #f5f5f5; padding: 1em; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+${html}
+</body>
+</html>`
+
+    const blob = new Blob([fullHTML], { type: "text/html" })
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url

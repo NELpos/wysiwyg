@@ -21,6 +21,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { ImageResizeModal } from "./image-resize-modal"
 import { SlashCommands } from "./slash-commands"
 import { FloatingToolbar } from "./floating-toolbar"
+import { convertToEmailHTML } from "./converters/html-converter"
 
 const lowlight = createLowlight(common)
 
@@ -184,7 +185,7 @@ export function WysiwygEditor() {
   })
 
   const getHTML = useCallback(() => {
-    return editor?.getHTML() || ""
+    return editor ? convertToEmailHTML(editor) : ""
   }, [editor])
 
   const getJSON = useCallback(() => {
